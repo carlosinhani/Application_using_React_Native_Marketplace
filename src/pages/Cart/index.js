@@ -1,8 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { View } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { useSelector } from 'react-redux';
 import { EmptyCart } from '../../components/EmptyCart';
 import formatValue from '../../utils/formatValue';
+import EmptyCart from '../../components/EmptyCart';
+import * as CartActions from '../../store/modules/cart/actions';
 import {
     Container,
     ProductContainer,
@@ -24,7 +28,9 @@ import {
 } from './styles';
 
 export default function Cart() {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const products = useSelector(({ cart }) => cart);
+
 
   const cartSize = useMemo(() => {
       return products.length || 0;
@@ -32,7 +38,7 @@ export default function Cart() {
 
   const cartTotal = useMemo(() =>{
       const cartAmount = products.reduce((accumulator, product) => {
-        const totalPrice = accumulator + product.price * product.quantity;
+        const totalPrice = accumulator + product.price * product.amount;
         return totalPrice;
       }, 0);
 
@@ -61,7 +67,7 @@ export default function Cart() {
                        </ProductSinglePrice>
 
                        <TotalContainer>
-                         <ProductQuantity>{`${item.quantity}x`}</ProductQuantity>
+                         <ProductQuantity>{`${item.amount}x`}</ProductQuantity>
 
                          <ProductPrice>
                           {formatValue(item.price * item.quantity)}
