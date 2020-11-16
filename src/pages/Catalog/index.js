@@ -41,7 +41,7 @@ export default function App() {
                    <ProductImage source={{ uri: item.image_url }} />
                    <ProductTitle>{item.title}</ProductTitle>
                    <PriceContainer>
-                      <ProductPrice>R${item.price}</ProductPrice>
+                     <ProductPrice>{formatValue(item.price)}</ProductPrice>
                       <ProductButton onPress={() => {}}>
                          <ProductButtonText>adicionar</ProductButtonText>
                          <FeatherIcon size={30} name="plus-circle" color="#d1d" />
